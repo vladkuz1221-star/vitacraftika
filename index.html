@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1626">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="VitaCraftika">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="VitaCraftika — инженерия нового мира">
+  <meta property="og:description" content="Техническое выживание Minecraft 1.21.1 NeoForge: механизмы Create, дирижабли, события. IP сервера и сборка модов на сайте.">
+  <meta property="og:image" content="https://vitacraftika.ru/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="VitaCraftika — инженерия нового мира">
+  <meta name="twitter:description" content="Сервер Minecraft с Create и дирижаблями. Заходи!">
+  <meta name="twitter:image" content="https://vitacraftika.ru/assets/og-image.jpg">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <!-- Подтверждение владения сайтом. Когда Яндекс или Google выдадут код, раскомментируй нужную строку и вставь код:
+  <meta name="yandex-verification" content="КОД_ЯНДЕКСА">
+  <meta name="google-site-verification" content="КОД_GOOGLE">
+  -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"VitaCraftika","alternateName":["Вита Крафтика","VitaCraftika Minecraft"],"inLanguage":"ru","description":"Сервер технического выживания Minecraft 1.21.1 NeoForge: Create, Aeronautics, дирижабли и события.","sameAs":["https://t.me/vitacraftika"]}</script>
+  <meta name="description" content="VitaCraftika — сервер Minecraft 1.21.1 NeoForge с техническим выживанием: Create, Aeronautics, дирижабли, инженерия и события. IP сервера и сборка модов на сайте.">
+  <title>VitaCraftika — сервер Minecraft с Create и дирижаблями</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="scene.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="gear" viewBox="0 0 100 100"><circle cx="50" cy="50" r="41" fill="none" stroke="currentColor" stroke-width="12" stroke-dasharray="10.7 10.7"/><circle cx="50" cy="50" r="33" fill="none" stroke="currentColor" stroke-width="9"/><circle cx="50" cy="50" r="10" fill="currentColor"/><path d="M50 22v56M22 50h56" stroke="currentColor" stroke-width="5"/></symbol>
+    <symbol id="airship" viewBox="0 0 200 80"><ellipse cx="95" cy="32" rx="85" ry="26" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="3"/><path d="M20 32h150M45 14q-10 18 0 36M75 8q-10 24 0 48M105 8q10 24 0 48M135 14q10 18 0 36" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".6"/><path d="M14 32 0 14v36z" fill="currentColor"/><rect x="68" y="62" width="54" height="14" rx="3" fill="currentColor"/><path d="M78 58v4M112 58v4" stroke="currentColor" stroke-width="2"/><path d="M184 32v-15M184 32v15" stroke="currentColor" stroke-width="3"/></symbol>
+  </defs></svg>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="header" id="top">
+    <a class="logo" href="#top" onclick="return false" aria-label="VitaCraftika">
+      <span class="logo-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13"/><circle cx="20" cy="20" r="5"/><path d="M20 1v7M20 32v7M1 20h7M32 20h7M6.5 6.5l5 5m17 17 5 5m0-27-5 5m-17 17-5 5"/></svg></span>
+      <span class="logo-type">VITA<span>CRAFTIKA</span></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#about" data-open="about" data-i18n="nav_world">Мир</a>
+      <a href="#tech" data-open="tech" data-i18n="nav_systems">Технологии</a>
+      <a href="#events" data-open="events" data-i18n="nav_events">События</a>
+      <a href="#rules" data-open="rules" data-i18n="nav_rules">Правила</a>
+      <a href="#more" data-open="more" data-i18n="nav_more">Ещё</a>
+    </nav>
+    <div class="header-actions">
+      <button class="language" id="language" type="button">RU <span>/</span> EN</button>
+      <a class="header-telegram" href="https://t.me/vitacraftika" target="_blank" rel="noopener" aria-label="Telegram"><svg class="tg-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#2AABEE"/><path fill="#fff" d="M5.43 11.87c3.5-1.52 5.83-2.53 7-3.01 3.33-1.39 4.02-1.63 4.48-1.64.1 0 .32.02.47.14.12.1.16.23.17.33.02.1.04.31.02.48-.18 1.9-.96 6.5-1.36 8.63-.17.9-.5 1.2-.82 1.23-.7.06-1.23-.46-1.9-.9-1.06-.7-1.66-1.13-2.68-1.8-1.19-.78-.42-1.21.26-1.91.18-.18 3.25-2.98 3.31-3.23.01-.03.01-.15-.06-.21s-.17-.04-.25-.02c-.1.02-1.79 1.14-5.06 3.35-.48.33-.91.49-1.3.48-.43-.01-1.25-.24-1.87-.44-.75-.25-1.35-.37-1.3-.79.03-.22.33-.44.9-.67z"/></svg><span data-i18n="telegram">Telegram</span></a>
+      <button class="menu-button" id="menuButton" aria-label="Открыть меню" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </header>
+
+  <main><div class="scene" id="scene">
+    <div class="cam" id="cam">
+      <video class="bg-video" id="vid" autoplay muted loop playsinline preload="auto" poster="assets/airship-poster.jpg" aria-hidden="true"><source src="assets/airship.webm" type="video/webm"><source src="assets/airship.mp4" type="video/mp4"></video>
+      <div id="hotspots"></div>
+    </div>
+    <div class="veil"></div>
+    <div class="dimmer"></div>
+    <div class="hero-copy">
+      <button class="hud" id="hud" data-open="online" type="button"><i class="dot"></i><b id="hudN">—</b><small id="hudL"></small></button>
+      <h1 class="wordmark">VitaCraftika</h1>
+      <p class="lead" data-i18n="hero_lead">Техническое выживание в Minecraft: механизмы, дирижабли и события.</p>
+      <div class="hero-actions">
+        <button class="cta" data-open="join" type="button" data-i18n="hero_cta">Как зайти</button>
+        <a class="tg-btn" href="https://t.me/vitacraftika" target="_blank" rel="noopener"><svg class="tg-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#2AABEE"/><path fill="#fff" d="M5.43 11.87c3.5-1.52 5.83-2.53 7-3.01 3.33-1.39 4.02-1.63 4.48-1.64.1 0 .32.02.47.14.12.1.16.23.17.33.02.1.04.31.02.48-.18 1.9-.96 6.5-1.36 8.63-.17.9-.5 1.2-.82 1.23-.7.06-1.23-.46-1.9-.9-1.06-.7-1.66-1.13-2.68-1.8-1.19-.78-.42-1.21.26-1.91.18-.18 3.25-2.98 3.31-3.23.01-.03.01-.15-.06-.21s-.17-.04-.25-.02c-.1.02-1.79 1.14-5.06 3.35-.48.33-.91.49-1.3.48-.43-.01-1.25-.24-1.87-.44-.75-.25-1.35-.37-1.3-.79.03-.22.33-.44.9-.67z"/></svg><span data-i18n="telegram">Telegram</span></a>
+        <button class="ip-chip" id="heroIp" type="button" aria-label="Копировать IP"><code id="heroIpText">—</code><span data-i18n="copy_short">Копировать</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="overlay" id="overlay" hidden><div class="sheet" id="sheet"><button class="close" id="closeBtn" type="button" aria-label="Закрыть">×</button><div class="panel" id="panel-more" hidden><section class="more-section">
+      <h2 data-i18n="more_title">Ещё на сайте</h2>
+      <div class="more-grid">
+        <button type="button" data-open="join"><b data-i18n="m_join">Как зайти</b><span data-i18n="m_join_d">Версия, моды и адрес сервера</span></button>
+        <button type="button" data-open="news"><b data-i18n="nav_news">Новости</b><span data-i18n="m_news_d">Что нового на сервере</span></button>
+        <button type="button" data-open="stats"><b data-i18n="m_stats">Статистика</b><span data-i18n="m_stats_d">Топ игроков по времени</span></button>
+        <button type="button" data-open="profile"><b data-i18n="m_profile">Профиль</b><span data-i18n="m_profile_d">Проверь, в сети ли ты</span></button>
+        <button type="button" data-open="faq"><b data-i18n="m_faq">Вопросы</b><span data-i18n="m_faq_d">Ответы перед стартом</span></button>
+        <button type="button" data-open="support"><b data-i18n="m_support">Поддержать</b><span data-i18n="m_support_d">Добровольно, без бонусов в игре</span></button>
+      </div>
+    </section></div><div class="panel" id="panel-online" hidden><section class="status-section">
+      <div class="wrap status-inner">
+        <div><p class="micro-label" data-i18n="status_kicker">SERVER STATUS</p><h2 data-i18n="status_title">На связи с миром.</h2><p class="status-description" data-i18n="status_desc">Онлайн сервера в реальном времени.</p></div>
+        <div class="status-widget"><div class="status-widget-head"><span data-i18n="status_label">СОСТОЯНИЕ СЕРВЕРА</span><span class="status-pending" id="statusBadge"><i></i><span id="statusText" data-i18n="st_loading">ПРОВЕРКА…</span></span></div><div class="status-metrics"><div><strong id="pOnline">—</strong><span data-i18n="players_online">ИГРОКОВ ОНЛАЙН</span></div><div><strong id="pMax">—</strong><span data-i18n="slots">МАКС. СЛОТОВ</span></div><div><strong>1.21.1</strong><span>NEOFORGE</span></div></div><div class="status-widget-foot" id="playersList" data-i18n="status_foot">Обновляется каждые 30 секунд.</div></div>
+      </div>
+    </section></div><div class="panel" id="panel-tech" hidden><section class="systems-section">
+      <div class="wrap section">
+        <div class="section-top"><span class="section-number">02 / <i data-i18n="systems_num">ТЕХНОЛОГИИ</i></span><span class="section-line"></span><span class="section-aside" data-i18n="systems_aside">ИНСТРУМЕНТЫ ДЛЯ СОЗДАНИЯ</span></div>
+        <div class="systems-intro"><h2 data-i18n="systems_title">Собери свой<br><em>технологический мир.</em></h2><p data-i18n="systems_intro">Модовая основа сервера открывает разные направления развития — от производственных линий до воздушных экспедиций.</p></div>
+        <div class="systems-grid">
+          <article class="system-card system-create"><div class="system-card-top"><span>01 — MECHANICS</span><span class="system-icon">⚙</span></div><div class="system-card-bottom"><h3>CREATE</h3><p data-i18n="create_desc">Шестерни, кинетика, конвейеры и автоматизация. Строй системы, которые работают.</p><span class="card-arrow">↗</span></div></article>
+          <article class="system-card system-aero"><div class="system-card-top"><span>02 — FLIGHT</span><span class="system-icon">✈</span></div><div class="system-card-bottom"><h3>CREATE<br>AERONAUTICS</h3><p data-i18n="aero_desc">Проектируй летательные аппараты и осваивай трёхмерное пространство.</p><span class="card-arrow">↗</span></div></article>
+          <article class="system-card system-cannons"><div class="system-card-top"><span>03 — CONSTRUCTION</span><span class="system-icon">⌖</span></div><div class="system-card-bottom"><h3>CREATE<br>BIG CANNONS</h3><p data-i18n="cannons_desc">Масштабные инженерные постройки и тематические игровые активности.</p><span class="card-arrow">↗</span></div></article>
+          <article class="system-card system-radars"><div class="system-card-top"><span>04 — SIGNAL</span><span class="system-icon">◎</span></div><div class="system-card-bottom"><h3>CREATE<br>RADARS</h3><p data-i18n="radars_desc">Радарные системы и дополнительные способы взаимодействия с миром.</p><span class="card-arrow">↗</span></div></article>
+          <article class="system-card system-seas"><div class="system-card-top"><span>05 — DEEP WORLD</span><span class="system-icon">≈</span></div><div class="system-card-bottom"><h3>DEEP SEAS</h3><p data-i18n="seas_desc">Исследуй подводные пространства и открывай новые места.</p><span class="card-arrow">↗</span></div></article>
+        </div>
+      </div>
+    </section></div><div class="panel" id="panel-events" hidden><section class="event-section">
+      <div class="event-bg"></div><svg class="gear deco d1" data-par="-0.06" aria-hidden="true"><use href="#gear"/></svg><svg class="gear deco d2 rev" data-par="0.05" aria-hidden="true"><use href="#gear"/></svg>
+      <div class="wrap event-wrap">
+        <div class="section-top light-top"><span class="section-number">03 / <i data-i18n="events_num">СОБЫТИЯ</i></span><span class="section-line"></span><span class="section-aside" data-i18n="events_aside">СЕРВЕРНАЯ ЖИЗНЬ</span></div>
+        <div class="event-content">
+          <div><p class="micro-label" data-i18n="event_kicker">NOT JUST ANOTHER DAY</p><h2 data-i18n="event_title">У мира есть<br><em>свои события.</em></h2></div>
+          <div class="event-copy"><p data-i18n="event_text">Тематические военные ивенты, совместные активности и особые испытания добавляют в выживание новые цели. Следи за анонсами, собирай команду и участвуй в жизни мира.</p><a class="button button-light" href="https://t.me/vitacraftika" target="_blank" rel="noopener"><span data-i18n="event_cta">Анонсы в Telegram</span><b>↗</b></a></div>
+        </div>
+        <div class="event-bottom"><span>VITACRAFTIKA / COMMUNITY EVENTS</span><span data-i18n="event_note">ДАТЫ И ПРАВИЛА СОБЫТИЙ ПУБЛИКУЮТСЯ В TELEGRAM</span></div>
+      </div>
+    </section><section class="community-section wrap">
+      <div class="section-top"><span class="section-number">04 / <i data-i18n="community_num">СООБЩЕСТВО</i></span><span class="section-line"></span><span class="section-aside">STAY CONNECTED</span></div>
+      <div class="community-grid">
+        <div><p class="micro-label" data-i18n="community_kicker">ТВОЯ ТОЧКА СТАРТА</p><h2 data-i18n="community_title">Вся важная<br>информация —<br><em>в одном месте.</em></h2></div>
+        <div class="community-card"><div class="telegram-mark">↗</div><h3>Telegram</h3><p data-i18n="community_text">IP-адрес и сборка модов уже ждут тебя на сайте, а новости, ивенты и объявления — в нашем Telegram-сообществе.</p><a class="button button-primary" href="https://t.me/vitacraftika" target="_blank" rel="noopener"><span data-i18n="community_cta">Открыть Telegram</span><b>↗</b></a><span class="community-url">t.me/vitacraftika</span></div>
+      </div>
+    </section></div><div class="panel" id="panel-rules" hidden><section class="section rules-section wrap">
+      <div class="section-top"><span class="section-number">06 / <i data-i18n="rules_num">ПРАВИЛА</i></span><span class="section-line"></span><span class="section-aside" data-i18n="rules_aside">КОРОТКО И ПО ДЕЛУ</span></div>
+      <h2 class="plain-h" data-i18n="rules_title">Правила <em>сервера.</em></h2>
+      <ol class="rules-list">
+        <li data-i18n="r1">Никаких читов, X-ray и дюпов багов.</li>
+        <li data-i18n="r2">Уважай игроков: без оскорблений и травли.</li>
+        <li data-i18n="r3">Война и разрушения — только в рамках объявленных военных ивентов.</li>
+        <li data-i18n="r4">Даты и условия ивентов публикуются в Telegram.</li>
+        <li data-i18n="r5">Не строй механизмы, которые лагают сервер (бесконечные автоматы, массы сущностей).</li>
+        <li data-i18n="r6">Решения администрации окончательны; спорное — в Telegram.</li>
+      </ol>
+    </section></div><div class="panel" id="panel-news" hidden><section class="section news-section wrap">
+      <div class="section-top"><span class="section-number">05 / <i data-i18n="news_num">НОВОСТИ</i></span><span class="section-line"></span><span class="section-aside" data-i18n="news_aside">ЧТО НОВОГО</span></div>
+      <h2 class="plain-h" data-i18n="news_title">Новости и обновления</h2>
+      <div class="news-list" id="newsList"></div>
+    </section></div><div class="panel" id="panel-about" hidden><section class="section world-section wrap">
+      <div class="section-top"><span class="section-number">01 / <i data-i18n="world_num">О МИРЕ</i></span><span class="section-line"></span><span class="section-aside" data-i18n="world_aside">БОЛЬШЕ, ЧЕМ ОБЫЧНОЕ ВЫЖИВАНИЕ</span></div>
+      <div class="world-grid">
+        <div class="world-heading"><p class="micro-label" data-i18n="world_kicker">WELCOME TO VITACRAFTIKA</p><h2 data-i18n="world_title">Мир, который<br>работает <em>по твоим</em><br>правилам.</h2></div>
+        <div class="world-copy"><p data-i18n="world_text">VitaCraftika — техническое выживание с упором на инженерные проекты, исследование и совместную игру. Здесь можно построить автоматизированную фабрику, спроектировать воздушный корабль или отправиться изучать глубины.</p><p class="muted" data-i18n="world_text2">Мы объединяем свободу песочницы и атмосферу большого индустриального мира — без лишней суеты, с пространством для собственных идей.</p><a class="under-link" href="https://t.me/vitacraftika" target="_blank" rel="noopener"><span data-i18n="world_link">Узнать новости в Telegram</span><b>↗</b></a></div>
+      </div>
+      <div class="world-pillars">
+        <article><span class="pillar-index">A / 01</span><div class="pillar-icon">⚙</div><h3 data-i18n="pillar1_title">Создавай</h3><p data-i18n="pillar1_text">Превращай идеи в работающие механизмы и автоматизированные системы.</p></article>
+        <article><span class="pillar-index">A / 02</span><div class="pillar-icon">⌁</div><h3 data-i18n="pillar2_title">Исследуй</h3><p data-i18n="pillar2_text">Открывай новые территории, глубины и маршруты в небе.</p></article>
+        <article><span class="pillar-index">A / 03</span><div class="pillar-icon">✣</div><h3 data-i18n="pillar3_title">Объединяйся</h3><p data-i18n="pillar3_text">Строй вместе, участвуй в событиях и создавай историю сервера.</p></article>
+      </div>
+    </section></div><div class="panel" id="panel-join" hidden><section class="join-section"><svg class="gear deco d3" data-par="0.05" aria-hidden="true"><use href="#gear"/></svg>
+      <div class="wrap section">
+        <div class="section-top"><span class="section-number">07 / <i data-i18n="join_num">ПОДКЛЮЧЕНИЕ</i></span><span class="section-line"></span><span class="section-aside" data-i18n="join_aside">НАЧНИ ИГРАТЬ ЗА 2 МИНУТЫ</span></div>
+        <div class="join-grid">
+          <div>
+            <p class="micro-label" data-i18n="join_kicker">JOIN THE SERVER</p>
+            <h2 data-i18n="join_title">Как <em>зайти</em><br>на сервер.</h2>
+            <ol class="join-steps">
+              <li><b>01</b><div><strong data-i18n="step1_title">Установи Minecraft 1.21.1</strong><span data-i18n="step1_text">Загрузчик — NeoForge. Версия игры важна, иначе сервер не пустит.</span></div></li>
+              <li><b>02</b><div><strong data-i18n="step2_title">Скачай сборку модов</strong><span data-i18n="step2_text">Распакуй архив из папки mods в каталог .minecraft/mods — всё уже настроено.</span></div></li>
+              <li><b>03</b><div><strong data-i18n="step3_title">Добавь сервер по IP</strong><span data-i18n="step3_text">Введи адрес в мультиплеере и заходи.</span></div></li>
+            </ol>
+          </div>
+          <div class="join-panel">
+            <div class="join-panel-head"><span data-i18n="join_panel_label">СЕРВЕРНЫЙ АДРЕС</span><span class="live-dot"></span></div>
+            <div class="ip-row">
+              <code id="serverIp">apply-unaired.gl.joinmc.link</code>
+              <button class="copy-ip" id="copyIp" type="button" data-i18n="copy_ip">КОПИРОВАТЬ</button>
+            </div>
+            <div class="join-meta"><span>ВЕРСИЯ: 1.21.1</span><span>ЗАГРУЗЧИК: NEOFORGE</span></div>
+            <a class="button button-primary mods-button" href="mods/mods.zip" download><span data-i18n="mods_button">СКАЧАТЬ МОДЫ</span><b>↓</b></a>
+            <span id="mods"></span><div class="mods-list" id="modsList"></div>
+            <p class="mods-note" data-i18n="mods_note">Замени .jar в папке <b>mods/</b> и дважды нажми <b>UPDATE_MODS.bat</b> — архив и список модов обновятся сами.</p>
+          </div>
+        </div>
+      </div>
+    </section></div><div class="panel" id="panel-map" hidden><section class="section map-section wrap">
+      <div class="section-top"><span class="section-number">08 / <i data-i18n="map_num">КАРТА МИРА</i></span><span class="section-line"></span><span class="section-aside" data-i18n="map_aside">ЖИВАЯ КАРТА</span></div>
+      <h2 class="plain-h" data-i18n="map_title">Карта <em>мира.</em></h2>
+      <div class="map-box"><iframe id="mapFrame" title="World map" loading="lazy" hidden></iframe><p class="muted" id="mapNote" data-i18n="map_soon">Карта появится после подключения BlueMap или Dynmap: впиши ссылку в config.js (mapUrl).</p></div>
+      <a class="under-link" id="mapOpen" href="#" target="_blank" rel="noopener" hidden><span data-i18n="map_open">Открыть карту в новой вкладке</span><b>↗</b></a>
+    </section></div><div class="panel" id="panel-stats" hidden><section class="section stats-section wrap">
+      <div class="section-top"><span class="section-number">09 / <i data-i18n="stats_num">СТАТИСТИКА</i></span><span class="section-line"></span><span class="section-aside" data-i18n="stats_aside">ТОП ИГРОКОВ</span></div>
+      <h2 class="plain-h" data-i18n="stats_title">Статистика <em>игроков.</em></h2>
+      <div class="stats-wrap"><table class="stats-table"><thead><tr><th>#</th><th data-i18n="st_player">ИГРОК</th><th data-i18n="st_hours">ЧАСОВ</th><th data-i18n="st_kills">УБИЙСТВ МОБОВ</th><th data-i18n="st_deaths">СМЕРТЕЙ</th></tr></thead><tbody id="statsBody"></tbody></table></div>
+      <p class="muted" id="statsNote" data-i18n="stats_empty">Данных пока нет: запусти UPDATE_STATS.bat на компьютере с сервером.</p>
+    </section></div><div class="panel" id="panel-profile" hidden><section class="section profile-section wrap">
+      <div class="section-top"><span class="section-number">10 / <i data-i18n="profile_num">ИГРОК</i></span><span class="section-line"></span><span class="section-aside" data-i18n="profile_aside">ТВОЙ НИК</span></div>
+      <div class="profile-grid">
+        <div><h2 class="plain-h" data-i18n="profile_title">Профиль <em>по нику.</em></h2><p class="muted" data-i18n="profile_text">Введи свой Minecraft-ник. Он сохранится в этом браузере, а мы покажем, в сети ли ты сейчас.</p></div>
+        <div class="profile-card"><img id="nickAvatar" alt="" width="64" height="64" hidden><div class="profile-body"><div class="nick-row"><input id="nickInput" maxlength="16" autocomplete="off" spellcheck="false" placeholder="Steve" data-i18n-ph="nick_ph"><button class="copy-ip" id="nickSave" type="button" data-i18n="nick_save">СОХРАНИТЬ</button></div><div class="nick-status" id="nickStatus"></div></div></div>
+      </div>
+    </section></div><div class="panel" id="panel-support" hidden><section class="section support-section wrap">
+      <div class="section-top"><span class="section-number">11 / <i data-i18n="support_num">ПОДДЕРЖКА</i></span><span class="section-line"></span><span class="section-aside" data-i18n="support_aside">ТОЛЬКО ДОБРОВОЛЬНО</span></div>
+      <div class="support-box"><div><h2 class="plain-h" data-i18n="support_title">Поддержать <em>проект.</em></h2><p class="muted" data-i18n="support_text">Донат добровольный и не даёт преимуществ в игре. Он просто помогает оплачивать сервер.</p></div><div><a class="button button-primary" id="donateBtn" href="#" target="_blank" rel="noopener"><span data-i18n="support_btn">Поддержать</span><b>↗</b></a><p class="mods-note" id="donateNote" hidden data-i18n="support_soon">Ссылка для поддержки появится позже — следи за Telegram.</p></div></div>
+    </section></div><div class="panel" id="panel-faq" hidden><section class="faq-section wrap">
+      <div class="section-top"><span class="section-number">12 / <i data-i18n="faq_num">ВОПРОСЫ</i></span><span class="section-line"></span><span class="section-aside">GOOD TO KNOW</span></div>
+      <div class="faq-grid"><div><p class="micro-label">FAQ / VITACRAFTIKA</p><h2 data-i18n="faq_title">Перед тем<br>как <em>начать.</em></h2></div>
+        <div class="faq-list">
+          <article class="faq-item"><button aria-expanded="false"><span data-i18n="q1">Какая версия Minecraft нужна?</span><b>+</b></button><div class="faq-answer"><p data-i18n="a1">Сервер ориентирован на Minecraft 1.21.1 с загрузчиком NeoForge.</p></div></article>
+          <article class="faq-item"><button aria-expanded="false"><span data-i18n="q2">Где взять IP и обязательные моды?</span><b>+</b></button><div class="faq-answer"><p data-i18n="a2">Всё уже на сайте: IP-адрес и кнопка «Скачать моды» — в разделе «Как зайти». Список изменений и новости по-прежнему публикуем в Telegram.</p></div></article>
+          <article class="faq-item"><button aria-expanded="false"><span data-i18n="q3">Как узнать о событиях?</span><b>+</b></button><div class="faq-answer"><p data-i18n="a3">Следи за анонсами в Telegram — там публикуются новости, даты и условия участия.</p></div></article>
+          <article class="faq-item"><button aria-expanded="false"><span data-i18n="q4">Можно ли предложить идею?</span><b>+</b></button><div class="faq-answer"><p data-i18n="a4">Да. Напиши в сообщество и поделись предложением по развитию сервера.</p></div></article>
+        </div>
+      </div>
+    </section></div></div></div></main>
+
+  <footer class="footer">
+    <div class="footer-main wrap">
+      <a class="logo" href="#top" onclick="return false"><span class="logo-icon"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="13"/><circle cx="20" cy="20" r="5"/><path d="M20 1v7M20 32v7M1 20h7M32 20h7M6.5 6.5l5 5m17 17 5 5m0-27-5 5m-17 17-5 5"/></svg></span><span class="logo-type">VITA<span>CRAFTIKA</span></span></a>
+      <p data-i18n="footer_slogan">Технологии. Полёты. Развитие.</p>
+      <a href="https://t.me/vitacraftika" target="_blank" rel="noopener">TELEGRAM ↗</a>
+    </div>
+    <div class="footer-bottom wrap"><span>© <span id="year"></span> VITACRAFTIKA</span><span data-i18n="footer_note">НЕОФИЦИАЛЬНЫЙ ФАН-ПРОЕКТ ПО MINECRAFT</span><a href="#top" data-i18n="back_top">НАВЕРХ ↑</a></div>
+  </footer>
+  <button class="to-top" id="toTop" aria-label="Наверх">↑</button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="config.js"></script>
+  <script src="news.js"></script>
+  <script src="mods/list.js"></script>
+  <script src="stats.js"></script>
+  <script src="script.js"></script>
+  <script src="scene.js"></script>
+</body>
+</html>
