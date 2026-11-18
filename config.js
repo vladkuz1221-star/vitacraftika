@@ -8,3 +8,5 @@ window.VC = {
 window.VC.mapUrl = "";
 // demo:true показывает выдуманный онлайн (только для проверки внешнего вида). На боевом сайте не включай.
 window.VC.demo = false;
+// Ссылка на скачивание сборки модов, если архив большой и лежит не на сайте (GitHub Releases, Яндекс Диск). Пусто = берётся mods/mods.zip с сайта.
+window.VC.modsUrl = "https://github.com/vladkuz1221-star/vitacraftika/releases/download/mods/mods.zip";

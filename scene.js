@@ -45,6 +45,9 @@
   addEventListener("resize", layout);
   layout();
 
+  // Внешняя ссылка на моды (если архив слишком большой для сайта)
+  const modsUrl = window.VC && window.VC.modsUrl;
+  if (modsUrl) document.querySelectorAll(".mods-button").forEach(a => { a.href = modsUrl; a.removeAttribute("download"); a.target = "_blank"; a.rel = "noopener"; });
   const ipText = $("heroIpText"), CFGip = (window.VC && window.VC.ip) || "";
   ipText.textContent = CFGip || "—";
   $("heroIp").addEventListener("click", () => {
