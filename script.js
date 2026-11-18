@@ -71,12 +71,18 @@ function updateStatusText(){
 async function refreshStatus(){
   const ip = CFG.ip || "apply-unaired.gl.joinmc.link";
   if (CFG.demo) { lastStatus = {online:true, players:{online:7, max:20, list:["Steve","Alex","Vita","Aero","Gearhead","Cloudy","Engi"].map(n=>({name:n}))}}; updateStatusText(); return; }
-  try { const r = await fetch("https://api.mcsrvstat.us/3/" + ip); lastStatus = await r.json(); if (lastStatus.online === undefined) throw 0; }
-  catch (e) {
-    try { const r = await fetch("https://api.mcstatus.io/v2/status/java/" + ip); const j = await r.json();
-      lastStatus = {online: j.online, players: j.players && {online: j.players.online, max: j.players.max, list: (j.players.list || []).map(p => ({name: p.name_clean || p.name_raw}))}}; }
-    catch (e2) { lastStatus = "err"; }
+  // Опрашиваем несколько сервисов по очереди и берём первый, который видит сервер «онлайн»
+  // (один сервис может не достучаться из-за IPv6, другой достучится).
+  const norm = j => ({online: j.online, players: j.players && {online: j.players.online, max: j.players.max, list: (j.players.list || []).map(p => ({name: p.name_clean || p.name_raw || p.name}))}});
+  const sources = [
+    async () => { const j = await (await fetch("https://api.mcsrvstat.us/3/" + ip)).json(); if (j.online === undefined) throw 0; return j; },
+    async () => { const j = norm(await (await fetch("https://api.mcstatus.io/v2/status/java/" + ip)).json()); if (j.online === undefined) throw 0; return j; },
+  ];
+  let best = null;
+  for (const src of sources) {
+    try { const j = await src(); if (!best) best = j; if (j.online) { best = j; break; } } catch (e) {}
   }
+  lastStatus = best || "err";
   updateStatusText();
 }
 const nickInput = document.getElementById("nickInput"), nickStatus = document.getElementById("nickStatus"), nickAvatar = document.getElementById("nickAvatar");
@@ -170,8 +176,18 @@ function renderStats(){
 function renderMap(){
   const url = CFG.mapUrl, f = document.getElementById("mapFrame");
   if (!url) return;
+  const o = document.getElementById("mapOpen"), note = document.getElementById("mapNote");
+  o.href = url; o.hidden = false;
+  // Сайт на https не может вставить внутрь себя карту с адресом http — браузер это блокирует. Тогда даём крупную кнопку.
+  if (location.protocol === "https:" && /^http:\/\//i.test(url)) {
+    f.hidden = true; o.classList.add("big");
+    note.hidden = false; note.setAttribute("data-i18n", "map_http"); note.textContent = translations[currentLang].map_http;
+    return;
+  }
+  o.classList.remove("big");
   if (f.getAttribute("src") !== url) f.src = url;
-  f.hidden = false; document.getElementById("mapNote").hidden = true;
-  const o = document.getElementById("mapOpen"); o.href = url; o.hidden = false;
+  f.hidden = false; note.hidden = true;
 }
+translations.ru.map_http = "Живая карта сервера открывается в новой вкладке.";
+translations.en.map_http = "The live server map opens in a new tab.";
 Object.assign(translations.en,{map_num:"WORLD MAP",map_aside:"LIVE MAP",map_title:"World <em>map.</em>",map_soon:"The map will appear once BlueMap or Dynmap is connected: put its URL in config.js (mapUrl).",map_open:"Open the map in a new tab",stats_num:"STATISTICS",stats_aside:"TOP PLAYERS",stats_title:"Player <em>statistics.</em>",st_player:"PLAYER",st_hours:"HOURS",st_kills:"MOB KILLS",st_deaths:"DEATHS",stats_empty:"No data yet: run UPDATE_STATS.bat on the server computer."});
